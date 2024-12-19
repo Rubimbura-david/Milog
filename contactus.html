@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MILOG Contact Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <style>
+    .navbar {
+      background-color: #d52d2a; /* Navbar background color */
+    }
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem 0;
+    }
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #ccc;
+    }
+    .footer-section {
+      border-right: 2px solid #e53935;
+      padding-right: 2rem;
+    }
+    .footer-section:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+    .social-icons a {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: #fff; /* Social icons color */
+    }
+    .form-size {
+      width: 40%;
+      margin: auto; /* Center the form */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" style="color: #ffffff;font-weight: bold;" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #ffffff;font-weight: bold;" href="{% url 'resource' %}">Resources</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #ffffff;font-weight: bold;" href="{% url 'report' %}">Report</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #ffffff;font-weight: bold;" href="{% url 'contactus' %}">Contact</a>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-search" style="color: #ffffff;font-weight: bold;"></i> <!-- Match search icon color -->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-us py-5">
+      <div class="container">
+        <h2 class="text-center mb-4" style="background-color: rgb(124, 122, 122); height: 100px; color: aliceblue;">CONTACT US</h2>
+        <h3 class="text-center mb-4">Please fill out the below information and an MILOG representative will contact you. If you prefer, you may contact our logistics manager</h3>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        <div class="form-size">
+          <form method="POST" action="{% url 'create_contact' %}">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="first-name" class="form-label form-label-medium">First Name</label>
+                <input type="text" class="form-control" id="first-name" name="first_name" placeholder="First Name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="last-name" class="form-label form-label-medium">Last Name</label>
+                <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Last Name" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label form-label-medium">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone-number" class="form-label form-label-medium">Phone Number</label>
+              <input type="tel" class="form-control" id="phone-number" name="phone_number" placeholder="Phone Number" required>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label form-label-medium">Message</label>
+              <textarea id="message" class="form-control" name="message" rows="6" placeholder="Enter your message here..." required></textarea>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms_conditions" required>
+              <label class="form-check-label" for="terms-conditions">I confirm I have read and accepted the Terms and Conditions.</label>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="data-storage" name="data_storage" required>
+              <label class="form-check-label" for="data-storage">I agree to my personal data being stored in accordance with MILOG Privacy Statement.</label>
+            </div>
+            <button type="submit" class="btn btn-danger">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-4 footer-section">
+            <h5>Contact</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">Phone</a></li>
+              <li><a href="#">Email</a></li>
+              <li><a href="#">Address</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-4 footer-section">
+            <h5>About Us</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">Leadership</a></li>
+              <li><a href="#">History</a></li>
+              <li><a href="#">Sustainability</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-4 footer-section">
+            <h5>Services</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">Asset Record</a></li>
+              <li><a href="#">Capabilities</a></li>
+            </ul>
+          </div>
+          <div class="col-12 social-icons">
+            <h5>Follow Us</h5>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

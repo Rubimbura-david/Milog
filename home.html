@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milog Asset Management</title>
+  {%load static%}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .navbar-brand img {
+      height: 30px;
+    }
+
+    .hero {
+      text-align: center;
+      color: white;
+    }
+
+    .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ccc;
+        }
+
+        .footer-section {
+            border-right: 2px solid #e53935;
+            padding-right: 2rem;
+        }
+
+        .footer-section:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+    .page{
+      background-size: cover;       
+      background-position: center;   
+      background-repeat: no-repeat;  
+
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+      <div class="container d-flex justify-content-between">
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                <i class="fas fa-user-circle"></i>
+                {% if user.is_authenticated %}
+          {{ user.username }}
+        {% endif %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="dropdown-item" href="{% url 'login' %}" style="color: red;">Log Out</a>
+            </div>
+        </li>
+      </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
+          <ul class="navbar-nav" style="margin-left: auto; display: flex; align-items: center;">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}" style="color: white; font-weight: bold;">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'resource' %}" style="color: white; font-weight: bold;">Resources</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'report' %}" style="color: white; font-weight: bold;">Report</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contactus' %}" style="color: white; font-weight: bold;">Contact</a>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-search" style="color: white;"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="text-center" style="background-color: white; width: 100%; max-width: 1500px; margin: 0 auto;">
+    <img src="{%static 'img/logo.jpg'%}" style="height: 50px; width: 90px;">
+    <b>Milog</b>
+  </div>
+
+  <div class="page" style="background-image: url('/static/img/homebg.jpg');">
+    <div class="container" style="padding-bottom: 8%;">
+
+      <div class="hero">
+        <h1 style="width: 285px; margin-top: 3%;">ASSET<br>MANAGEMENT</h1>
+        <button class="btn btn-danger" style="border-radius: 12px; margin-top: 3%; margin-left: -90%; height: 45px; width: 200px;">WATCH VIDEO</button>
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="search p-3 bg-light d-flex flex-column align-items-start justify-content-between" style="height: 130px; width: 55%; margin-top: 4%;">
+              <p style="color: black; font-size: 0.9rem;">Search new asset</p>
+              <div class="d-flex align-items-center w-100 mt-2">
+                <input type="text" class="form-control mr-2" style="background-color: rgb(172, 169, 168); font-size: 0.8rem;" placeholder="Search...">
+                <button class="btn btn-danger" style="border-radius: 20%; font-size: 0.8rem;">></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="search p-3 bg-light d-flex flex-column align-items-start justify-content-between" style="height: 130px; width: 55%; margin-top: 4%;">
+              <p style="color: black; font-size: 0.9rem;">Find location</p>
+              <div class="d-flex align-items-center w-100 mt-2">
+                <input type="text" class="form-control mr-2" style="background-color: rgb(172, 169, 168); font-size: 0.8rem;" placeholder="location...">
+                <button class="btn btn-danger" style="border-radius: 20%; font-size: 0.8rem;">></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="asset" style="background-color: rgb(249, 244, 244); padding-bottom: 1%; margin-top: -48px;">
+    <div class="container my-5">
+      <h1 class="text-center">ASSETS AT A GLANCE</h1>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="card">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="{%static 'img/truck.jpg'%}" class="img-fluid rounded-start" style="height: 100%;">
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 class="card-title" style="color: rgb(228, 104, 104);">COMPUTER</h5>
+                  <p class="card-text">Total: 30</p>
+                  <p class="card-text">Code: CB</p>
+                  <a href="{%url 'more_view' %}" class="btn btn-danger">more...</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="card">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="{%static 'img/tent.jpg'%}" class="img-fluid rounded-start" style="height: 100%;">
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 class="card-title" style="color: rgb(228, 104, 104);">COMPUTER</h5>
+                  <p class="card-text">Total: 30</p>
+                  <p class="card-text">Code: CB</p>
+                  <a href="{%url 'more_view' %}" class="btn btn-danger">more...</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 footer-section">
+                <h5>Contact</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Phone</a></li>
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">Address</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 footer-section">
+                <h5>About us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 footer-section">
+                <h5>Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Asset Record</a></li>
+                    <li><a href="#">Capabilities</a></li>
+                </ul>
+            </div>
+            <div class="col-15 social-icons">
+                <h5>Follow Us</h5>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

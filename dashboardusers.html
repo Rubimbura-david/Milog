@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milog Dashboard</title>{%load static%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+            body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #d52d2a; /* Navbar color */
+        }
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover {
+            color: #ccc !important;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 0;
+        }
+
+        .btn {
+            border-radius: 0;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .dashboard-sidebar {
+            background-color: #d52d2a; 
+            color: white;
+            padding: 2rem;
+            min-height: 100vh; 
+            width: 200px; 
+        }
+
+        .dashboard-sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dashboard-sidebar-menu li {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .dashboard-sidebar-menu li a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center; 
+        }
+
+        .dashboard-sidebar-menu li a i {
+            margin-right: 8px; 
+        }
+
+        .active-item {
+            font-weight: bold; 
+        }
+
+        .active-circle {
+            width: 12px; 
+            height: 12px; 
+            background-color: #fff;
+            border-radius: 50%; 
+            margin-right: 8px; 
+            display: none; 
+        }
+
+        .active-item .active-circle {
+            display: block; 
+        }
+
+        .dashboard-main {
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .metric-card, .action-card {
+            border: 1px solid #e53935; 
+            border-radius: 0.25rem; 
+            padding: 1rem;
+            text-align: center;
+            background-color: #D9D9D9; 
+            color: #333; 
+            margin-bottom: 2rem; 
+        }
+
+        .metric-title {
+            font-size: 1rem; 
+            font-weight: bold;
+        }
+
+        .metric-value {
+            font-size: 1.5rem; 
+            font-weight: bold;
+            color: #e53935; 
+        }
+
+        .dashboard-section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #e53935;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            margin-left: 9%;
+        }
+
+        .search-label {
+            margin-right: 8px; 
+        }
+
+        .search-input {
+            background-color: #c62825;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            flex-grow: 1; 
+        }
+
+        .search-input::placeholder {
+            color: #fff;
+        }
+
+        .search-button {
+            background-color: #c62825; 
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #a21e1c;
+        }
+
+        .recent-actions-table {
+            margin-top: 2rem;
+            width: 100%; 
+        }
+
+        .recent-actions-table th,
+        .recent-actions-table td {
+            text-align: center; 
+        }
+
+        .active-status {
+            margin-top: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+
+        .status-circle {
+            width: 30px; 
+            height: 30px; 
+            background-color: #28a745; 
+            border-radius: 50%; 
+            margin-right: 8px; 
+        }
+
+        .user-table {
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .user-table th,
+        .user-table td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a href="{%url 'index'%}" class="navbar-brand">
+               <p><img src="{%static 'img/logo.jpg'%}" alt="Milog" height="30">MILOG</p>
+            </a>
+            <div class="search-container">
+                <input class="form-control search-input" type="search" placeholder="Search here!!" aria-label="Search">
+                <button class="btn search-button" type="submit">Go</button>
+            </div>
+            <div class="d-flex ms-auto align-items-center"> <!-- Flexbox to align items -->
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="home.html"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                        <li><a class="dropdown-item" href="dashboardusers.html"><i class="fas fa-users"></i> Users</a></li>
+                        <li><a class="dropdown-item" href="dashboardassets.html"><i class="fas fa-boxes"></i> Assets</a></li>
+                        <li><a class="dropdown-item" href="notifications.html"><i class="fas fa-sign-out-alt"></i> Notifications</a></li>
+                    </ul>
+                </div>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <div class="dashboard-sidebar">
+            <ul class="dashboard-sidebar-menu">
+                <li><a href="{%url 'dashboard'%}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{%url 'dashboardusers'%}" class="active-item"> <i class="fas fa-users"></i> Users</a></li>
+                <li><a href="{%url 'home'%}"><i class="fas fa-cog"></i> Home</a></li>
+                <li><a href="{%url 'dashboardassets'%}"><i class="fas fa-boxes"></i> Assets</a></li>
+                <li><a href="{%url 'notifications'%}"><i class="fas fa-sign-out-alt"></i> Notifications</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-main">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Assets</div>
+                        <div class="metric-value">{{ total_assets }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Assets Under Maintenance</div>
+                        <div class="metric-value">{{ total_under_maintenance }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Assets Out</div>
+                        <div class="metric-value">{{ total_assets_out }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-card">
+                <div class="dashboard-section-title">Users</div>
+                <table class="table table-bordered user-table">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Department</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for department in unique_departments %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ department.department }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteDepartment('{{ department.id }}')">Delete</button>
+                                    <button class="btn btn-dark btn-sm" onclick="editDepartment('{{ department.id }}')">Edit</button>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userModal" data-users="{{ department.users|join:', ' }}">View</button>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">No departments found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <!-- User Modal -->
+                <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="userModalLabel">Department Users</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul id="userList">
+                                    <!-- User list will be populated here -->
+                                </ul>
+                                <div id="loadingMessage" style="display: none;">Loading users...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    $('#userModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget);
+                        var users = button.data('users');
+                        var modal = $(this);
+                        modal.find('#userList').empty();
+                        modal.find('#loadingMessage').show(); // Show loading message
+                
+                        // Simulate a delay for loading users (remove in production)
+                        setTimeout(function() {
+                            modal.find('#loadingMessage').hide(); // Hide loading message
+                
+                            if (users) {
+                                var userArray = users.split(', ');
+                                userArray.forEach(function(user) {
+                                    modal.find('#userList').append('<li>' + user + '</li>');
+                                });
+                            } else {
+                                modal.find('#userList').append('<li>No users found.</li>');
+                            }
+                        }, 500); // Simulated delay for user loading
+                    });
+                
+                    function deleteDepartment(departmentId) {
+                        if (confirm("Are you sure you want to delete this department?")) {
+                            // Implement AJAX call to delete department
+                            console.log("Deleting department with ID:", departmentId);
+                            // Example: AJAX call here, then refresh or update the UI
+                        }
+                    }
+                
+                    function editDepartment(departmentId) {
+                        // Implement edit functionality
+                        console.log("Editing department with ID:", departmentId);
+                        // Redirect to edit page or open edit modal
+                    }
+                </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MILOG Page</title>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Custom CSS */
+    .navbar {
+      background-color: #d52d2a;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: white;
+    }
+    .navbar-nav .nav-link {
+      color: white;
+    }
+    .filter-section {
+      background-color: #f8f9fa;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .logo {
+      height: 50px;
+      background-color: #FFEFEF;
+    }
+    .logo img {
+      height: 50px;
+      margin-top: -10px;
+      max-width: 50px;
+    }
+    .card {
+      height: 200px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px; /* Space between cards */
+    }
+    .card img {
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #000;
+    }
+    .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ccc;
+        }
+
+        .footer-section {
+            border-right: 2px solid #e53935;
+            padding-right: 2rem;
+        }
+
+        .footer-section:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+    .social-icons a {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+    .pagination {
+      justify-content: center;
+    }
+    .card-body p {
+      flex-grow: 1;
+      margin-bottom: 5px;
+    }
+    .btn-red {
+      background-color: #ed1c24;
+      color: white;
+      border: none;
+    }
+    .btn-red:hover {
+      background-color: #c3131a;
+    }
+    /* Additional custom spacing for form elements */
+    .form-control {
+      margin-bottom: 15px; /* Space between form controls */
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container d-flex justify-content-between">
+      <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
+        <ul class="navbar-nav" style="margin-left: auto; display: flex; align-items: center;">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}" style="color: white; font-weight: bold;">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'resource' %}" style="color: white; font-weight: bold;">Resources</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'report' %}" style="color: white; font-weight: bold;">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contactus' %}" style="color: white; font-weight: bold;">Contact</a>
+          </li>
+          <li class="nav-item">
+            <i class="fas fa-search" style="color: white;"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <center>
+    <div class="logo">
+      <h1><img src="{% static 'img/logo.jpg' %}" alt="#">MILOG</h1>
+    </div>
+  </center>
+  <!-- Filter Section -->
+  <div class="filter-section container">
+    <form class="row">
+      <div class="col-md-6">
+        <label for="resourceFilter" class="form-label">Filter resources:</label>
+        <select id="resourceFilter" class="form-control">
+          <option>All resources</option>
+          <option>Trucks</option>
+          <option>Ships</option>
+          <option>Aircraft</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="categoryFilter" class="form-label">Filter by category:</label>
+        <select id="categoryFilter" class="form-control">
+          <option>All types</option>
+          <option>Type 1</option>
+          <option>Type 2</option>
+          <option>Type 3</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <!-- Resource Cards -->
+  <div class="container">
+    <div class="row g-3">
+    <!-- Card Section -->
+    <div class="row">
+      {% if assets %}
+          {% for asset in assets %}
+          <div class="col-md-6">
+              <div class="card mb-4">
+                  {% if asset.image %}
+                      <img src="{{ asset.image.url }}" alt="{{ asset.name }}" class="card-img-top">
+                  {% else %}
+                      <img src="{% static 'img/default.jpg' %}" alt="Default Image" class="card-img-top">  <!-- Fallback image -->
+                  {% endif %}
+                  <div class="card-body">
+                      <h5 class="card-title">Name: {{ asset.name }}</h5>
+                      <p>Code: {{ asset.serial_code }}</p>
+                      <p>Total: {{ asset.total }}</p>  <!-- Display the total count -->
+                      <a href="{% url 'more_view' %}" class="btn btn-danger">More</a>  <!-- Link to more.html -->
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      {% else %}
+          <div class="col-12">
+              <p>No assets available.</p>  <!-- Message if no assets are found -->
+          </div>
+      {% endif %}
+  </div>
+<!-- Card Section End -->
+    <nav class="mt-4">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+      </ul>
+    </nav>
+  </div>
+  <footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 footer-section">
+                <h5>Contact</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Phone</a></li>
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">Address</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 footer-section">
+                <h5>About us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 footer-section">
+                <h5>Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Asset Record</a></li>
+                    <li><a href="#">Capabilities</a></li>
+                </ul>
+            </div>
+            <div class="col-15 social-icons">
+                <h5>Follow Us</h5>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>   
+</html>
